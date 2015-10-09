@@ -1,9 +1,5 @@
 package cubes;
 
-/**
- *
- * @author p1002239
- */
 public class EnvironnementVariable
 {
     public EnvironnementVariable(

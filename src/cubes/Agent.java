@@ -2,10 +2,6 @@ package cubes;
 
 import java.util.Random;
 
-/**
- *
- * @author p1002239
- */
 public class Agent
 {
     public Agent(String name, String but)
@@ -19,13 +15,13 @@ public class Agent
     private final String name;
     
     private final Random rnd;
+    private EnvironnementVariable env;
     
     public String getName()
     {
         return name;
     }
     
-    private EnvironnementVariable env;
     public void getEnv(Environnement context)
     {
         env = context.getEnvironnement(this);
@@ -34,9 +30,9 @@ public class Agent
     public boolean isSatisfied()
     {
         return (
-                    (but == null && env.agentUnder == null)
-                    || (env.agentUnder != null && but != null && but.equals(env.agentUnder.name))
-                ) && !env.isPushed;
+                    (but == null && env.agentUnder == null) // On the table
+                    || (env.agentUnder != null && but != null && but.equals(env.agentUnder.name)) // On the cube
+                ) && !env.isPushed; // Not pushed
     }
     
     public void act(Environnement context)
@@ -44,11 +40,11 @@ public class Agent
         if(!isSatisfied())
         {
             if(env.agentOver != null)
-            { // Non libre
+            { // Not free (cube over)
                 context.push(env.agentOver);
             }
             else
-            { // Libre
+            { // Free (no cube over)
                 context.moveTo(this, rnd.nextInt(2) == 0 ? env.place1 : env.place2);
             }
         }

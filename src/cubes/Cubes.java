@@ -1,32 +1,35 @@
 package cubes;
 
-/**
- *
- * @author p1002239
- */
-public class Cubes {
+import java.util.Random;
+import java.util.stream.IntStream;
+import javafx.util.Pair;
 
-    /**
-     * @param args the command line arguments
-     */
+public class Cubes
+{
     public static void main(String[] args)
     {
-        Environnement env = new Environnement(3, 4);
+        // Agents list
+        Agent[] agents = new Agent[]
+        {
+            new Agent("A", "B"),
+            new Agent("B", "C"),
+            new Agent("C", "D"),
+            new Agent("D", null)
+        };
         
-        Agent[] agents = new Agent[4];
-        agents[0] = new Agent("A", "B");
-        agents[1] = new Agent("B", "C");
-        agents[2] = new Agent("C", "D");
-        agents[3] = new Agent("D", null);
+        Environnement env = new Environnement(3, agents.length);
         
-        env.setAgent(agents[2], 0);
-        env.setAgent(agents[1], 0);
-        env.setAgent(agents[0], 0);
-        env.setAgent(agents[3], 0);
+        // Randomize the place of each Agent on the position 0
+        Random rnd = new Random();
+        IntStream.range(0, agents.length)
+                .mapToObj(i -> new Pair<Integer, Agent>(rnd.nextInt(), agents[i]))
+                .sorted((o1, o2) -> Integer.compare(o1.getKey(), o2.getKey()))
+                .forEachOrdered(p -> env.setAgent(p.getValue(), 0));
         
-        System.out.println("*********** 0 ************");
+        // Execution loop
+        System.out.println("*********** INITIAL ************");
         System.out.println(env);
-        for(int i = 0; i < 100; i++)
+        for(int i = 0; i < 50; i++)
         {
             for(Agent a : agents)
             {
@@ -34,7 +37,7 @@ public class Cubes {
                 a.act(env);
             }
             
-            System.out.println("*********** " + i + " ************");
+            System.out.println("*********** " + (i + 1) + " ************");
             System.out.println(env);
         }
     }

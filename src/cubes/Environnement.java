@@ -4,10 +4,6 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Stack;
 
-/**
- *
- * @author p1002239
- */
 public class Environnement
 {
     public Environnement(int maxW, int maxH)
@@ -93,6 +89,7 @@ public class Environnement
                 str += data[x][y] + " ";
             str += "\n";
         }
+        str += "-----\n";
         str += "1 2 3 ";
         
         return str;
